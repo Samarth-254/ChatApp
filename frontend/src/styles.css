@@ -1112,21 +1112,27 @@ p {
 @media (max-width: 900px) {
   .login-shell {
     grid-template-columns: 1fr;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .login-aside {
-    border-right: none;
-    border-bottom: 1px solid #1c2129;
-    padding: 48px 32px;
-    gap: 28px;
-  }
-
-  .login-aside-copy h1 {
-    font-size: 28px;
+    display: none;
   }
 
   .login-panel {
     padding: 32px 24px 56px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rooms-shell {
+    height: 100%;
+    overflow-y: auto;
   }
 
   .chat-layout {
@@ -1328,8 +1334,7 @@ p {
 
 @media (max-width: 640px) {
   .login-shell {
-    min-height: 100dvh;
-    height: auto;
+    height: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
