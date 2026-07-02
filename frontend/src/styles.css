@@ -1395,9 +1395,22 @@ p {
   }
 
   .chat-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    display: grid;
+    grid-template-areas: 
+      "title action"
+      "meta meta";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+  }
+
+  .chat-header-main {
+    display: contents;
+  }
+
+  .chat-title-header-row {
+    grid-area: title;
   }
 
   .header-meta {
@@ -1406,16 +1419,19 @@ p {
   }
 
   .chat-actions {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
+    grid-area: action;
+    width: auto;
+    margin: 0;
   }
 
   .room-meta-row {
+    grid-area: meta;
     width: 100%;
-    align-items: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: nowrap;
   }
 
   .message-stack {
@@ -1442,15 +1458,38 @@ p {
 
   .emoji-popover {
     width: 100%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+  }
+
+  .emoji-popover .EmojiPickerReact {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 300px !important;
   }
 
   .room-code-value {
     word-break: break-all;
   }
 
-  .room-link-button,
-  .copy-button {
-    width: 100%;
+  .copy-button,
+  .copy-link-button {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .leave-room-button {
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
   }
 
@@ -1514,6 +1553,9 @@ p {
   }
 
   .emoji-popover {
-    bottom: calc(100% + 10px);
+    bottom: calc(100% + 8px);
+    width: 100%;
+    left: 0;
+    right: 0;
   }
 }

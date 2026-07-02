@@ -711,7 +711,7 @@ function ChatSection() {
 
         <main className="chat-card card">
           <header className="chat-header">
-            <div className="chat-title-block">
+            <div className="chat-header-main">
               <div className="chat-title-header-row">
                 <button
                   className="mobile-menu-button"
@@ -723,7 +723,7 @@ function ChatSection() {
                     <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
                   </svg>
                 </button>
-                <div>
+                <div className="chat-title-text-block">
                   <p className="eyebrow">Conversation</p>
                   <h1>{room?.name || 'Simple chat room'}</h1>
                 </div>
@@ -732,16 +732,34 @@ function ChatSection() {
                 <span className="room-code-label">Room code</span>
                 <span className="room-code-value">{room?.code}</span>
                 <button className="icon-button copy-button" type="button" onClick={handleCopyCode} aria-label="Copy room code">
-                  {copiedCode ? 'Copied!' : '⧉'}
+                  {copiedCode ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5ce0bf" strokeWidth="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  )}
                 </button>
-                <button className="secondary-button room-link-button" type="button" onClick={handleCopyLink} disabled={!roomShareLink}>
-                  {copiedLink ? 'Copied link' : 'Copy link'}
+                <button className="icon-button copy-link-button" type="button" onClick={handleCopyLink} disabled={!roomShareLink} aria-label="Copy share link">
+                  {copiedLink ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5ce0bf" strokeWidth="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
 
             <div className="header-meta chat-actions">
-              <button className="secondary-button" type="button" onClick={handleLeaveRoom}>
+              <button className="secondary-button leave-room-button" type="button" onClick={handleLeaveRoom}>
                 Leave room
               </button>
             </div>
@@ -765,7 +783,14 @@ function ChatSection() {
                 ref={emojiButtonRef}
                 className="emoji-button"
                 type="button"
-                onClick={() => setEmojiOpen((current) => !current)}
+                onClick={() => {
+                  setEmojiOpen((current) => {
+                    if (!current) {
+                      textareaRef.current?.blur();
+                    }
+                    return !current;
+                  });
+                }}
                 aria-label="Open emoji picker"
               >
                 😊
@@ -782,6 +807,7 @@ function ChatSection() {
                 }}
                 onKeyDown={handleComposerKeyDown}
                 onBlur={() => stopTyping()}
+                onFocus={() => setEmojiOpen(false)}
                 placeholder="Type a message..."
                 autoComplete="off"
               />
